@@ -40,7 +40,11 @@ function fetchTimeQuery(time: string) {
 
 // fetch frames
 export async function fetchFrames(time: string, offset: number = 0, limit: number = 5) {
-    return [];
+    // make a get request to /api/top-frames?offset=offset&limit=limit
+    let dataURL = `/api/top-frames?limit=${limit}&offset=${offset}`;
+    let resp = await fetch(dataURL);
+    let data = await resp.json();
+    return data.result;
 };
 
 // fetch tweet count
@@ -48,3 +52,12 @@ export async function fetchFrameCount(time: string) {
     fetchTimeQuery(time);
     return 0;
 };
+
+export async function fetchFrameData(url: string) {
+    // make a get request to /api/frame-data?url=url
+    let response = await fetch(`/api/frame-data?url=${url}`);
+    let data = await response.json();
+
+    console.log(data)
+    return data;
+}

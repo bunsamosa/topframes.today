@@ -44,10 +44,10 @@
 		</div>
 		<div class="w-2/5 flex flex-col justify-start h-screen overflow-hidden">
 			<TabGroup regionList="sticky top-0 variant-glass-surface">
-				<Tab bind:group={tabSet} name="tab1" value={0}>Last Hour</Tab>
-				<Tab bind:group={tabSet} name="tab2" value={1}>24 Hours</Tab>
+				<Tab bind:group={tabSet} name="tab1" value={0}>Global top frames</Tab>
+				<!-- <Tab bind:group={tabSet} name="tab2" value={1}>24 Hours</Tab>
 				<Tab bind:group={tabSet} name="tab2" value={2}>7 days</Tab>
-				<Tab bind:group={tabSet} name="tab3" value={3}>Season 5</Tab>
+				<Tab bind:group={tabSet} name="tab3" value={3}>Season 5</Tab> -->
 				<!-- Tab Panels --->
 				<svelte:fragment slot="panel">
 					<Lazy>
