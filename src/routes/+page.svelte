@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { TabGroup, Tab } from '@skeletonlabs/skeleton';
 	import FrameList from '$lib/components/FrameList.svelte';
-	import FrameStats from '$lib/components/FrameStats.svelte';
+	import UserStats from '$lib/components/UserStats.svelte';
 	import Lazy from 'svelte-lazy';
 	import Fa from 'svelte-fa';
 	import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -62,6 +62,13 @@
 		}
 	}
 
+	function exit() {
+		userData.set({
+			loggedIn: false,
+			name: "",
+			fid: 0,
+		})
+	}
 	let tabSet: number = 0;
 </script>
 
@@ -91,14 +98,24 @@
 							</button>
 						{/if}
 					{:else}
-					<p>{$userData.name}</p>
+					<div class="text-2xl font-bold">
+						Welcome {$userData.name}!
+						<button
+								type="button"
+								class="btn variant-ghost-error rounded-full"
+								on:click={exit}
+							>
+								<span class="px-1">exit</span>
+								<Fa icon={faAngleRight} />
+							</button>
+					</div>
 					{/if}
 				</div>
 			</div>
 			{#if $userData.loggedIn}
 				<Lazy keep=true>
 					<div class="lg:block hidden">
-						<FrameStats />
+						<UserStats />
 					</div>
 				</Lazy>
 			{/if}
