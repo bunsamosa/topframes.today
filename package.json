@@ -42,9 +42,12 @@
   },
   "type": "module",
   "dependencies": {
+    "@farcaster/auth-client": "^0.1.0",
     "@floating-ui/dom": "1.6.3",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "buffer": "^6.0.3",
     "highlight.js": "11.9.0",
-    "node-html-parser": "^6.1.12"
+    "node-html-parser": "^6.1.12",
+    "viem": "^2.8.18"
   }
 }

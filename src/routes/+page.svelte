@@ -7,11 +7,62 @@
 	import Lazy from 'svelte-lazy';
 	import Fa from 'svelte-fa';
 	import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+	import { createAppClient, viemConnector } from '@farcaster/auth-client';
+	import { userData } from '$lib/stores/User';
+	import Spinner from '$lib/components/common/Spinner.svelte';
+	import { getToastStore } from '@skeletonlabs/skeleton';
+	import type { ToastSettings, ToastStore } from '@skeletonlabs/skeleton';
+
+	let loading = false;
+	const toastStore: ToastStore = getToastStore();
+	let t: ToastSettings = {
+		message: '',
+		autohide: true
+	};
+
+	// create farcaster auth client
+	const appClient = createAppClient({
+		relay: 'https://relay.farcaster.xyz',
+		ethereum: viemConnector(),
+	});
+
+	// authenticate user
+	async function login() {
+		const { data: { channelToken, url } } = await appClient.createChannel({
+			siweUri: "https://framecaster.xyz/login",
+			domain: "Framecaster.xyz"
+		});
+
+		// open QR code login in a new window
+		console.log("Opening login window");
+		t.message = 'Opening login window';
+		toastStore.trigger(t);
+
+		loading = true;
+		window.open(url, '_blank');
+		const {data} = await appClient.watchStatus({ channelToken: channelToken });
+
+		if (data.state === 'completed') {
+			userData.set({
+				loggedIn: true,
+				name: data.displayName || data.username || "user",
+				fid: data.fid || 0,
+			})
+			t.message = 'Login successful';
+			toastStore.trigger(t);
+		} else {
+			console.log("Login failed");
+			userData.set({
+				loggedIn: false,
+				name: "",
+				fid: 0,
+			})
+			t.message = 'Login failed';
+			toastStore.trigger(t);
+		}
+	}
 
 	let tabSet: number = 0;
-
-	function leaderboard() {
-	}
 </script>
 
 
@@ -25,22 +76,32 @@
 					<br /> top frames
 					<br />on farcaster
 				</span>
-				<!-- <div class="mt-10 flex">
-					<button
-						type="button"
-						class="btn btn-xl variant-ghost-secondary rounded-full"
-						on:click={leaderboard}
-					>
-						<span class="px-1">leaderboard</span>
-						<Fa icon={faAngleRight} />
-					</button>
-				</div> -->
-			</div>
-			<Lazy keep=true>
-				<div class="lg:block hidden">
-					<FrameStats />
+				<div class="mt-10 flex">
+					{#if !$userData.loggedIn}
+						{#if loading}
+							<Spinner />
+						{:else}
+							<button
+								type="button"
+								class="btn btn-xl variant-ghost-secondary rounded-full"
+								on:click={login}
+							>
+								<span class="px-1">Login</span>
+								<Fa icon={faAngleRight} />
+							</button>
+						{/if}
+					{:else}
+					<p>{$userData.name}</p>
+					{/if}
 				</div>
-			</Lazy>
+			</div>
+			{#if $userData.loggedIn}
+				<Lazy keep=true>
+					<div class="lg:block hidden">
+						<FrameStats />
+					</div>
+				</Lazy>
+			{/if}
 		</div>
 		<div class="w-2/5 flex flex-col justify-start h-screen overflow-hidden">
 			<TabGroup regionList="sticky top-0 variant-glass-surface">
