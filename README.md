@@ -1,38 +1,15 @@
-# create-svelte
+# FrameCaster
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+FrameCaster is an interactive client that lets the user discover the top frames available on Farcaster ecosystem. A user can look at global ranking or login to view frames that are curated based on their interest and followers.
 
-## Creating a project
+## How it works
+- Recommendations and rankings obtained from Karma3Labs API
+    - Fetch the top frames and user specific frames - [Code](src\routes\api\top-frames\\+server.ts)
+    - Home-page renders a list of frames - [Component](src\lib\components\FrameList.svelte)
+    - User ranking and recommendations - [Component](src\routes\api\user-ranking\\+server.ts)
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Each frame is built by reading the meta properties from `<head>` tag
+    - Read metadata in the HTML source - [Code](src\routes\api\frame-data\\+server.ts)
+    - Extract buttons and build the frame - [Code](src\lib\scripts\FrameClient.ts), [Component](src\lib\components\Frame.svelte)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- User authentication with Farcaster vanilla JS client
