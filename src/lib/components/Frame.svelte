@@ -15,7 +15,7 @@
     {#await fetchData()}
         <Spinner />
     {:then}
-        <a class="card card-hover overflow-hidden" href="/elements/cards">
+        <div class="card card-hover overflow-hidden m-2">
             <header>
                 <img src={frameData["og:image"]} class="bg-black/50 w-full aspect-[21/9]" alt="Post" />
             </header>
@@ -30,12 +30,16 @@
             </div>
             <hr class="opacity-50" />
             <footer class="p-4 flex justify-start items-center space-x-4">
-                <!-- <Avatar src={getImageLink({ id: 'YOErFW8AfkI', w: 32, h: 32 })} width="w-8" /> -->
-                <!-- <div class="flex-auto flex justify-between items-center">
-                    <h6 class="font-bold" data-toc-ignore>By Alex</h6>
-                    <small>On {new Date().toLocaleDateString()}</small>
-                </div> -->
+                {#each frameData["buttons"] as btnData}
+                    {#if (btnData.action == "mint" || btnData.action == "tx")}
+                        <button class="btn variant-ghost-error rounded-full" disabled>{btnData.label}</button>
+                    {:else}
+                        <a href={btnData.post_url || frameData["fc:frame:post_url"]} target="_blank" rel="noopener noreferrer">
+                            <button class="btn variant-ghost-primary rounded-full">{btnData.label}</button>
+                        </a>
+                    {/if}
+                {/each}
             </footer>
-        </a>
+        </div>
     {/await}
 </div>

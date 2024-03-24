@@ -19,7 +19,6 @@
 		console.log('Fetching data for list type: ', listType, ' and offset: ', offset);
 		responseData = await fetchFrames(listType, offset, 10, $userData.fid);
 		console.log('Response length: ', responseData.length);
-		console.log(responseData);
 		loading = false;
 	}
 
