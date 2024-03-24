@@ -45,6 +45,7 @@
     "@farcaster/auth-client": "^0.1.0",
     "@floating-ui/dom": "1.6.3",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@sveltejs/adapter-cloudflare": "^4.2.0",
     "buffer": "^6.0.3",
     "highlight.js": "11.9.0",
     "node-html-parser": "^6.1.12",

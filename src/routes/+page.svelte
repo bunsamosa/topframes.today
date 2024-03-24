@@ -69,6 +69,7 @@
 			fid: 0,
 		})
 		tabSet = 0;
+		loading = false;
 	}
 	let tabSet: number = 0;
 </script>
