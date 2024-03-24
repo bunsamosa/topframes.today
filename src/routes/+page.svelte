@@ -68,6 +68,7 @@
 			name: "",
 			fid: 0,
 		})
+		tabSet = 0;
 	}
 	let tabSet: number = 0;
 </script>
@@ -123,20 +124,16 @@
 		<div class="w-2/5 flex flex-col justify-start h-screen overflow-hidden">
 			<TabGroup regionList="sticky top-0 variant-glass-surface">
 				<Tab bind:group={tabSet} name="tab1" value={0}>Global top frames</Tab>
-				<!-- <Tab bind:group={tabSet} name="tab2" value={1}>24 Hours</Tab>
-				<Tab bind:group={tabSet} name="tab2" value={2}>7 days</Tab>
-				<Tab bind:group={tabSet} name="tab3" value={3}>Season 5</Tab> -->
+				{#if $userData.loggedIn}
+					<Tab bind:group={tabSet} name="tab2" value={1}>For you</Tab>
+				{/if}
 				<!-- Tab Panels --->
 				<svelte:fragment slot="panel">
-					<Lazy>
+					<Lazy keep=true>
 						{#if tabSet === 0}
-							<FrameList listType="hour" />
+							<FrameList listType="global" />
 						{:else if tabSet === 1}
-							<FrameList listType="day" />
-						{:else if tabSet === 2}
-							<FrameList listType="week" />
-						{:else if tabSet === 3}
-							<FrameList listType="season" />
+							<FrameList listType="personal" />
 						{/if}
 					</Lazy>
 				</svelte:fragment>
