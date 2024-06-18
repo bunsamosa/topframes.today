@@ -49,6 +49,6 @@
     "buffer": "^6.0.3",
     "highlight.js": "11.9.0",
     "node-html-parser": "^6.1.12",
-    "viem": "^2.8.18"
+    "viem": "^2.15.1"
   }
 }
