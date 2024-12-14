@@ -1,6 +1,4 @@
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 <script setup lang="ts">
-	import { goto } from '$app/navigation';
 	import { TabGroup, Tab } from '@skeletonlabs/skeleton';
 	import FrameList from '$lib/components/FrameList.svelte';
 	import UserStats from '$lib/components/UserStats.svelte';
@@ -12,6 +10,7 @@
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import { getToastStore } from '@skeletonlabs/skeleton';
 	import type { ToastSettings, ToastStore } from '@skeletonlabs/skeleton';
+	import VideoList from '$lib/components/VideoList.svelte';
 
 	let loading = false;
 	const toastStore: ToastStore = getToastStore();
@@ -132,7 +131,7 @@
 				<svelte:fragment slot="panel">
 					<Lazy keep=true>
 						{#if tabSet === 0}
-							<FrameList listType="global" />
+							<VideoList listType="global" />
 						{:else if tabSet === 1}
 							<FrameList listType="personal" />
 						{/if}
